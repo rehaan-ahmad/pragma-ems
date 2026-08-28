@@ -1569,10 +1569,10 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-horizontal-rule/-/extension-horizontal-rule-2.26.3.tgz"
   integrity sha512-NhlJEDj0b/P1Rj4UOMgt4CjS4IXEhXQFsdiXmsYZxchfr4J72HrsOfZs4vAqIQbkrLgUlYEr/DGMNWzME78FrA==
 
-"@tiptap/extension-image@^2.11.5":
-  version "2.26.3"
-  resolved "https://registry.npmjs.org/@tiptap/extension-image/-/extension-image-2.26.3.tgz"
-  integrity sha512-juAAY1QuzCgfl66Q8AHITLVKbwXpv+BmLNCi8Cl4j6a+IkySzcS8gENJee0hMMyRvc9K1U75o4vokvy580u4kA==
+"@tiptap/extension-image@^2.27.2":
+  version "2.27.2"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-image/-/extension-image-2.27.2.tgz#c962eaae3d390e1641cffacdbd61af613306c32c"
+  integrity sha512-5zL/BY41FIt72azVrCrv3n+2YJ/JyO8wxCcA4Dk1eXIobcgVyIdo4rG39gCqIOiqziAsqnqoj12QHTBtHsJ6mQ==
 
 "@tiptap/extension-italic@^2.26.3":
   version "2.26.3"
