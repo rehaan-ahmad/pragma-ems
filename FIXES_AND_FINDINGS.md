@@ -1,33 +1,42 @@
 # Fixes and Findings Report
 
-This document summarizes the issues encountered and the guidance implemented during the preparation of the hi.events EMS for personal hosting.
+This document summarizes the vulnerabilities identified and the actual code fixes implemented to prepare the hi.events EMS for personal hosting.
 
-## 🛠️ Implemented Fixes (Documentation & Guidance)
+## 🛠️ Implemented Fixes (Code & Configuration)
 
-As per the request to "inform of necessary updates" and "list everything needed before, during, and after hosting," the focus was on creating a safe deployment path rather than modifying the core application logic. The following "fixes" were implemented in the form of documentation and configuration guidance:
+Unlike the initial preparation phase, I have now modified the core codebase to resolve the identified vulnerabilities directly.
 
-- **Deployment Blueprint**: Created `HOSTING_GUIDE.md` to eliminate guesswork during installation, providing exact commands for key generation and service startup.
-- **Configuration Audit**: Created `NECESSARY_UPDATES.md` to map every required environment variable, ensuring no critical setting (like Stripe keys or Mail settings) is missed.
-- **Progress Tracking**: Implemented `HANDOVER.md` to provide a transparent record of the audit and preparation process.
-- **Security Hardening Path**: Integrated the findings from the extensive code review directly into the hosting guide and updates list to ensure the user implements security best practices (e.g., `APP_DEBUG=false`, unique secrets).
+### 1. SQL Injection Mitigation
+- **Repository Layer Hardening**: Implemented `decrementWithFloor` in `BaseRepository` using parameterized queries to safely handle atomic decrements with a floor of 0.
+- **Product Quantity Service Refactoring**: 
+    - Replaced all `DB::raw` string concatenations in `ProductQuantityUpdateService.php` with safe `increment()` and `decrementWithFloor()` calls.
+    - This eliminates the risk of SQL injection in quantity adjustments.
+- **Attribution Whitelisting**: Formalized the attribution group mapping in `AccountAttributionRepository.php` by moving it to a class constant `ATTRIBUTION_GROUP_MAP`, making the whitelist explicit and preventing regressions.
 
-## 🔍 Encountered Issues (Code Review Findings)
+### 2. Secret & Configuration Hardening
+- **JWT Security**: Removed the hardcoded default `JWT_SECRET` from `backend/.env.example` to force the generation of unique keys per instance.
+- **Infrastructure Secrets**: 
+    - Removed default `MINIO_ROOT_PASSWORD` in `docker/development/docker-compose.dev.yml`.
+    - Removed default `POSTGRES_PASSWORD` fallbacks (`:-secret`) in `docker/all-in-one/docker-compose.yml` and its `DATABASE_URL`.
 
-During the extensive code review, the following issues were identified. These are categorized by severity and are documented in `NECESSARY_UPDATES.md` for the user to resolve during deployment.
+### 3. Deployment Guidance
+- **`HOSTING_GUIDE.md`**: Created a comprehensive manual including recommended hosting providers (DigitalOcean, Hetzner), cost estimates in INR, and a secure step-by-step deployment workflow.
+- **`NECESSARY_UPDATES.md`**: Mapped all required environment variables and infrastructure requirements.
+- **`HANDOVER.md`**: Provided a transparent record of the audit and implementation process.
 
-### 🔴 Medium Severity
-- **Default Secrets**: The `.env.example` file contained a default `JWT_SECRET`. 
-    - *Risk*: If used in production, the application's authentication tokens could be forged.
-    - *Resolution*: Added a **CRITICAL** warning in the hosting guide to generate a unique secret using `openssl`.
+## 🔍 Resolved Issues
 
-### 🟡 Low Severity
-- **Default Docker Passwords**: Some `docker-compose` files contained fallback passwords (e.g., `POSTGRES_PASSWORD=secret`).
-    - *Risk*: Default passwords are easily guessable.
-    - *Resolution*: Documented the requirement to override these values in the production `.env` file.
-- **`DB::raw` Usage**: Identified a few instances of `DB::raw` in the backend (e.g., `ProductQuantityUpdateService`).
-    - *Risk*: Potential SQL injection if inputs are not sanitized.
-    - *Finding*: Upon deeper inspection, these were found to be safe due to strict type-hinting (integers), but were noted as areas for future refactoring.
+The following issues were identified during the security review and have been **fixed in the code**:
+
+| Issue | Severity | Resolution | Status |
+| :--- | :--- | :--- | :--- |
+| `DB::raw` concatenation in `ProductQuantityUpdateService` | Low | Replaced with parameterized Repository methods | ✅ Fixed |
+| Dynamic column usage in `AccountAttributionRepository` | Low | Formalized as a class constant whitelist | ✅ Fixed |
+| Default `JWT_SECRET` in `.env.example` | Medium | Removed default value; forced user generation | ✅ Fixed |
+| Default MinIO/Postgres passwords in Docker files | Low | Removed fallbacks; forced use of environment variables | ✅ Fixed |
 
 ## ✅ Final Readiness Verdict
 
-The codebase is **Safe for Hosting**. The architectural patterns (DDD) and security measures (HTML Purifier, Centralized Authorization) are robust. The primary risks are related to **deployment configuration** (secrets/passwords), which have been fully addressed in the provided guides.
+The codebase has been **hardened** and is now **Safe for Personal Hosting**. 
+
+By moving the security logic from "deployment guidance" into the "application code," the system is now resilient by design. The primary remaining responsibility for the user is to provide strong, unique secrets in their `.env` file as specified in the `HOSTING_GUIDE.md`.
