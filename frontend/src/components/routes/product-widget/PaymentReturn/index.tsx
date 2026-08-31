@@ -29,10 +29,14 @@ export const PaymentReturn = () => {
 
     useEffect(
         () => {
+            const pollTimeoutMs = import.meta.env.VITE_UPI_POLL_TIMEOUT_MS
+                ? parseInt(import.meta.env.VITE_UPI_POLL_TIMEOUT_MS, 10)
+                : 30000;
+
             const timeout = setTimeout(() => {
                 setShouldPoll(false);
                 setAttemptManualConfirmation(true);
-            }, 30000);
+            }, pollTimeoutMs);
 
             return () => {
                 clearTimeout(timeout);

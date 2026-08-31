@@ -4,6 +4,7 @@ namespace HiEvents\Http\Actions\Orders\Payment;
 
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\Exceptions\RefundNotPossibleException;
+use HiEvents\Exceptions\Stripe\StripeRefundConfigurationException;
 use HiEvents\Http\Actions\BaseAction;
 use HiEvents\Http\Request\Order\RefundOrderRequest;
 use HiEvents\Resources\Order\OrderResource;
@@ -35,11 +36,13 @@ class RefundOrderAction extends BaseAction
                     'order_id' => $orderId,
                 ]))
             );
-        } catch (ApiErrorException|RefundNotPossibleException $exception) {
+        } catch (ApiErrorException|RefundNotPossibleException|StripeRefundConfigurationException $exception) {
             throw ValidationException::withMessages([
-                'amount' => $exception instanceof ApiErrorException
-                    ? 'Stripe error: ' . $exception->getMessage()
-                    : $exception->getMessage(),
+                'amount' => match (true) {
+                    $exception instanceof ApiErrorException => 'Stripe error: ' . $exception->getMessage(),
+                    $exception instanceof StripeRefundConfigurationException => $exception->getMessage(),
+                    default => $exception->getMessage(),
+                },
             ]);
         }
 

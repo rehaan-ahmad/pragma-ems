@@ -77,6 +77,16 @@ class StripePaymentIntentCreationService
 
             $isInrCurrency = strtoupper($paymentIntentDTO->currencyCode) === 'INR';
 
+            if ($isInrCurrency && !config('services.stripe.in_secret_key')) {
+                $this->logger->error('India Stripe keys not configured for INR payment', [
+                    'currencyCode' => $paymentIntentDTO->currencyCode,
+                ]);
+
+                throw new CreatePaymentIntentFailedException(
+                    __('India Stripe keys not configured. Set STRIPE_IN_SECRET_KEY environment variable to accept INR payments.')
+                );
+            }
+
             $paymentMethodConfig = $isInrCurrency
                 ? ['payment_method_types' => ['card', 'upi']]
                 : ['automatic_payment_methods' => ['enabled' => true]];

@@ -11,8 +11,35 @@ return [
     'frontend_url' => env('APP_FRONTEND_URL', 'http://localhost'),
     'api_url' => env('APP_URL', 'https://localhost:8443'),
     'cnd_url' => env('APP_CDN_URL', '/storage'),
-    'default_timezone' => 'Asia/Kolkata',
-    'default_currency_code' => 'INR',
+    'default_region' => env('APP_DEFAULT_REGION', 'india'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Region-based Defaults
+    |--------------------------------------------------------------------------
+    |
+    | These defaults are derived from the APP_DEFAULT_REGION setting.
+    | Supported regions: 'global', 'india', 'eu', 'us', 'canada'
+    | You can override individual values via their specific env vars below.
+    |
+    */
+
+    'default_timezone' => match (env('APP_DEFAULT_REGION', 'india')) {
+        'india' => 'Asia/Kolkata',
+        'eu', 'ireland' => 'Europe/Dublin',
+        'us' => 'America/New_York',
+        'canada' => 'America/Vancouver',
+        'global', default => 'UTC',
+    },
+
+    'default_currency_code' => match (env('APP_DEFAULT_REGION', 'india')) {
+        'india' => 'INR',
+        'eu', 'ireland' => 'EUR',
+        'us' => 'USD',
+        'canada' => 'CAD',
+        'global', default => 'USD',
+    },
+
     'saas_mode_enabled' => env('APP_SAAS_MODE_ENABLED', false),
     'saas_stripe_application_fee_percent' => env('APP_SAAS_STRIPE_APPLICATION_FEE_PERCENT', 1.5),
     'saas_stripe_application_fee_fixed' => env('APP_SAAS_STRIPE_APPLICATION_FEE_FIXED', 0),
@@ -79,9 +106,20 @@ return [
      */
     'tax' => [
         'eu_vat_handling_enabled' => env('APP_TAX_EU_VAT_HANDLING_ENABLED', env('APP_IS_HI_EVENTS')),
-        'india_gst_handling_enabled' => env('APP_TAX_INDIA_GST_HANDLING_ENABLED', false),
-        'default_vat_rate' => env('APP_TAX_DEFAULT_VAT_RATE', 0.18),
-        'default_vat_country' => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'IN'),
+        'india_gst_handling_enabled' => env('APP_TAX_INDIA_GST_HANDLING_ENABLED', env('APP_DEFAULT_REGION') === 'india'),
+        'default_vat_rate' => match (env('APP_DEFAULT_REGION', 'india')) {
+            'india' => env('APP_TAX_DEFAULT_VAT_RATE', 0.18),
+            'eu', 'ireland' => env('APP_TAX_DEFAULT_VAT_RATE', 0.23),
+            'canada' => env('APP_TAX_DEFAULT_VAT_RATE', 0.05),
+            'us', 'global', default => env('APP_TAX_DEFAULT_VAT_RATE', 0.0),
+        },
+        'default_vat_country' => match (env('APP_DEFAULT_REGION', 'india')) {
+            'india' => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'IN'),
+            'eu', 'ireland' => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'IE'),
+            'canada' => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'CA'),
+            'us' => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'US'),
+            'global', default => env('APP_TAX_DEFAULT_VAT_COUNTRY', 'US'),
+        },
     ],
 
     /*
