@@ -223,10 +223,10 @@ $router = app()->get('router');
 $router->prefix('/auth')->group(
     function (Router $router): void {
         // Auth
-        $router->post('/login', LoginAction::class)->name('auth.login');
+        $router->post('/login', LoginAction::class)->name('auth.login')->middleware('throttle:auth');
         $router->post('/logout', LogoutAction::class)->name('auth.logout');
-        $router->post('/register', CreateAccountAction::class)->name('auth.register');
-        $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password');
+        $router->post('/register', CreateAccountAction::class)->name('auth.register')->middleware('throttle:auth');
+        $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password')->middleware('throttle:auth');
 
         // Invitations
         $router->get('/invitation/{invite_token}', GetUserInvitationAction::class)->name('auth.invitation');
@@ -526,7 +526,8 @@ $router->prefix('/public')->group(
             ->middleware('throttle:10,1');
 
         // Stripe payment gateway
-        $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class);
+        $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class)
+            ->middleware('throttle:payment');
         $router->get('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', GetPaymentIntentActionPublic::class);
 
         // Questions

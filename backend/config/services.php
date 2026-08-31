@@ -46,6 +46,11 @@ return [
         'ie_public_key' => env('STRIPE_IE_PUBLIC_KEY', env('STRIPE_PUBLIC_KEY')),
         'ie_webhook_secret' => env('STRIPE_IE_WEBHOOK_SECRET', env('STRIPE_WEBHOOK_SECRET')),
 
+        // Indian platform (Optional - required for UPI payments)
+        'in_secret_key' => env('STRIPE_IN_SECRET_KEY', env('STRIPE_SECRET_KEY')),
+        'in_public_key' => env('STRIPE_IN_PUBLIC_KEY', env('STRIPE_PUBLIC_KEY')),
+        'in_webhook_secret' => env('STRIPE_IN_WEBHOOK_SECRET', env('STRIPE_WEBHOOK_SECRET')),
+
         // Primary platform for new organizers
         'primary_platform' => env('STRIPE_PRIMARY_PLATFORM'),
     ],

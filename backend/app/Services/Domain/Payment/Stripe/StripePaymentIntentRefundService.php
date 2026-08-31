@@ -6,7 +6,7 @@ use Brick\Math\Exception\MathException;
 use HiEvents\DomainObjects\StripePaymentDomainObject;
 use HiEvents\Values\MoneyValue;
 use Illuminate\Config\Repository;
-use RuntimeException;
+use HiEvents\Exceptions\Stripe\StripeRefundConfigurationException;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Refund;
 use Stripe\StripeClient;
@@ -43,7 +43,7 @@ class StripePaymentIntentRefundService
     {
         if ($this->config->get('app.saas_mode_enabled')) {
             if ($payment->getConnectedAccountId() === null) {
-                throw new RuntimeException(
+                throw new StripeRefundConfigurationException(
                     __('Cannot Refund: Stripe connect account not found and saas_mode_enabled is enabled')
                 );
             }

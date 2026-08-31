@@ -32,7 +32,7 @@ export const PaymentReturn = () => {
             const timeout = setTimeout(() => {
                 setShouldPoll(false);
                 setAttemptManualConfirmation(true);
-            }, 10000); //todo - this should be a env variable
+            }, 30000);
 
             return () => {
                 clearTimeout(timeout);

@@ -62,6 +62,9 @@ export default function StripeCheckoutForm({setSubmitHandler}: {
                 case "processing":
                     setMessage(t`Your payment is processing.`);
                     break;
+                case "requires_action":
+                    setMessage(t`Please complete the payment in your UPI app.`);
+                    break;
                 case "requires_payment_method":
                     setMessage(t`Your payment was not successful, please try again.`);
                     break;

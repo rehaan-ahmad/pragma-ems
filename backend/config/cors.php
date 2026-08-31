@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
@@ -27,7 +27,7 @@ return [
 
     'exposed_headers' => ['X-Auth-Token', 'Set-Cookie'],
 
-    'max_age' => 0,
+    'max_age' => 3600,
 
     'supports_credentials' => true,
 ];

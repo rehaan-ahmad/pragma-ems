@@ -75,14 +75,18 @@ class StripePaymentIntentCreationService
                 vatSettings: $paymentIntentDTO->vatSettings,
             );
 
+            $isInrCurrency = strtoupper($paymentIntentDTO->currencyCode) === 'INR';
+
+            $paymentMethodConfig = $isInrCurrency
+                ? ['payment_method_types' => ['card', 'upi']]
+                : ['automatic_payment_methods' => ['enabled' => true]];
+
             $paymentIntent = $stripeClient->paymentIntents->create([
                 'amount' => $paymentIntentDTO->amount->toMinorUnit(),
                 'currency' => $paymentIntentDTO->currencyCode,
                 'customer' => $this->upsertStripeCustomerWithClient($stripeClient, $paymentIntentDTO)->getStripeCustomerId(),
                 'metadata' => $this->getPaymentIntentMetadata($paymentIntentDTO, $applicationFee),
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
+                ...$paymentMethodConfig,
                 ...($paymentIntentDTO->description ? ['description' => $paymentIntentDTO->description] : []),
                 ...($applicationFee && !$bypassApplicationFees ? ['application_fee_amount' => $applicationFee->grossApplicationFee->toMinorUnit()] : []),
             ], $this->getStripeAccountData($paymentIntentDTO));

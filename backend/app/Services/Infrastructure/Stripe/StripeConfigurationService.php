@@ -11,6 +11,7 @@ class StripeConfigurationService
         return match ($platform) {
             StripePlatform::CANADA => config('services.stripe.ca_secret_key', config('services.stripe.secret_key')),
             StripePlatform::IRELAND => config('services.stripe.ie_secret_key', config('services.stripe.secret_key')),
+            StripePlatform::INDIA => config('services.stripe.in_secret_key', config('services.stripe.secret_key')),
             default => config('services.stripe.secret_key'),
         };
     }
@@ -20,6 +21,7 @@ class StripeConfigurationService
         return match ($platform) {
             StripePlatform::CANADA => config('services.stripe.ca_public_key', config('services.stripe.public_key')),
             StripePlatform::IRELAND => config('services.stripe.ie_public_key', config('services.stripe.public_key')),
+            StripePlatform::INDIA => config('services.stripe.in_public_key', config('services.stripe.public_key')),
             default => config('services.stripe.public_key'),
         };
     }
@@ -36,6 +38,7 @@ class StripeConfigurationService
             'default' => config('services.stripe.webhook_secret'),
             StripePlatform::CANADA->value => config('services.stripe.ca_webhook_secret'),
             StripePlatform::IRELAND->value => config('services.stripe.ie_webhook_secret'),
+            StripePlatform::INDIA->value => config('services.stripe.in_webhook_secret'),
         ]);
 
         // order by primary platform first

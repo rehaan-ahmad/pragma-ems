@@ -6,6 +6,7 @@ enum StripePlatform: string
 {
     case CANADA = 'ca';
     case IRELAND = 'ie';
+    case INDIA = 'in';
     
     public static function fromString(?string $value): ?self
     {

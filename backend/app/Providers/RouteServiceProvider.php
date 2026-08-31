@@ -37,6 +37,14 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perHour(20)->by($request->route('order_short_id') ?? $request->ip());
         });
 
+        RateLimiter::for('auth', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip());
+        });
+
+        RateLimiter::for('payment', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->group(base_path('routes/api.php'));
