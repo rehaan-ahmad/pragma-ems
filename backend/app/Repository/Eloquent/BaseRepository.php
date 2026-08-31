@@ -320,7 +320,15 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function decrement(int|float $id, string $column, int|float $amount = 1): int
     {
-        return $this->model->findOrFail($id)?->decrement($column, $amount);
+        return $this->model->findOrFail($id)->decrement($column, $amount);
+    }
+
+    public function decrementWithFloor(int|float $id, string $column, int|float $amount = 1): int
+    {
+        return $this->db->update(
+            "UPDATE {$this->model->getTable()} SET {$column} = GREATEST(0, {$column} - ?) WHERE id = ?",
+            [$amount, $id]
+        );
     }
 
     public function deleteWhere(array $conditions): int

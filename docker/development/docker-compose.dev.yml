@@ -131,7 +131,7 @@ services:
             - '${FORWARD_MINIO_CONSOLE_PORT:-8900}:8900'
         environment:
             MINIO_ROOT_USER: app
-            MINIO_ROOT_PASSWORD: password
+            MINIO_ROOT_PASSWORD: '${MINIO_ROOT_PASSWORD}'
         volumes:
             - 'app-minio:/data/minio'
         networks:

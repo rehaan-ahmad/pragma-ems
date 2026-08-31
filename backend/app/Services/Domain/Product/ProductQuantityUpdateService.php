@@ -34,11 +34,7 @@ class ProductQuantityUpdateService
                 $this->increaseCapacityAssignmentUsedCapacity($capacityAssignment->getId(), $adjustment);
             });
 
-            $this->productPriceRepository->updateWhere([
-                'quantity_sold' => DB::raw('quantity_sold + ' . $adjustment),
-            ], [
-                'id' => $priceId,
-            ]);
+            $this->productPriceRepository->increment($priceId, 'quantity_sold', $adjustment);
         });
     }
 
@@ -51,11 +47,7 @@ class ProductQuantityUpdateService
                 $this->decreaseCapacityAssignmentUsedCapacity($capacityAssignment->getId(), $adjustment);
             });
 
-            $this->productPriceRepository->updateWhere([
-                'quantity_sold' => DB::raw('GREATEST(0, quantity_sold - ' . $adjustment . ')'),
-            ], [
-                'id' => $priceId,
-            ]);
+            $this->productPriceRepository->decrementWithFloor($priceId, 'quantity_sold', $adjustment);
         });
     }
 
@@ -87,20 +79,12 @@ class ProductQuantityUpdateService
 
     private function increaseCapacityAssignmentUsedCapacity(int $capacityAssignmentId, int $adjustment = 1): void
     {
-        $this->capacityAssignmentRepository->updateWhere([
-            CapacityAssignmentDomainObjectAbstract::USED_CAPACITY => DB::raw(CapacityAssignmentDomainObjectAbstract::USED_CAPACITY . ' + ' . $adjustment),
-        ], [
-            'id' => $capacityAssignmentId,
-        ]);
+        $this->capacityAssignmentRepository->increment($capacityAssignmentId, CapacityAssignmentDomainObjectAbstract::USED_CAPACITY, $adjustment);
     }
 
     private function decreaseCapacityAssignmentUsedCapacity(int $capacityAssignmentId, int $adjustment = 1): void
     {
-        $this->capacityAssignmentRepository->updateWhere([
-            CapacityAssignmentDomainObjectAbstract::USED_CAPACITY => DB::raw('GREATEST(0, ' . CapacityAssignmentDomainObjectAbstract::USED_CAPACITY . ' - ' . $adjustment . ')'),
-        ], [
-            'id' => $capacityAssignmentId,
-        ]);
+        $this->capacityAssignmentRepository->decrementWithFloor($capacityAssignmentId, CapacityAssignmentDomainObjectAbstract::USED_CAPACITY, $adjustment);
     }
 
     /**

@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\DB;
  */
 class AccountAttributionRepository extends BaseRepository implements AccountAttributionRepositoryInterface
 {
+    public const ATTRIBUTION_GROUP_MAP = [
+        'source' => 'utm_source',
+        'campaign' => 'utm_campaign',
+        'medium' => 'utm_medium',
+        'source_type' => 'source_type',
+    ];
+
     protected function getModel(): string
     {
         return AccountAttribution::class;
@@ -33,14 +40,7 @@ class AccountAttributionRepository extends BaseRepository implements AccountAttr
         int $perPage,
         int $page
     ): LengthAwarePaginator {
-        $groupByMap = [
-            'source' => 'utm_source',
-            'campaign' => 'utm_campaign',
-            'medium' => 'utm_medium',
-            'source_type' => 'source_type',
-        ];
-
-        $groupColumn = $groupByMap[$groupBy] ?? 'utm_source';
+        $groupColumn = self::ATTRIBUTION_GROUP_MAP[$groupBy] ?? 'utm_source';
         $liveStatus = EventStatus::LIVE->name;
 
         $query = DB::table('account_attributions as aa')
