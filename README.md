@@ -1,108 +1,69 @@
 <div align="center">
 
-<img src="https://hievents-public.s3.us-west-1.amazonaws.com/website/github-banner.png?v=1" alt="Hi.Events - Open Source Event Ticketing Platform" width="100%">
+<img src="https://hievents-public.s3.us-west-1.amazonaws.com/website/github-banner.png?v=1" alt="Pragma Event Management System" width="100%" style="border-radius: 8px;">
 
-# Hi.Events
+# ⚡ Pragma EMS
 
-### Open-source event ticketing and management platform
+### Enterprise Event Ticketing & Management Platform — Hardened & India-Ready
 
-Sell tickets online for conferences, nightlife events, concerts, club nights, workshops, and festivals.  
-Self-hosted or cloud. Your events, your brand, your data.
+*Sell tickets online for conferences, nightlife events, concerts, workshops, and festivals with zero per-ticket fees, native UPI payment flows, and hardened enterprise security.*
 
-[Try Cloud →](https://app.hi.events/auth/register?utm_source=gh-readme) · [Live Demo](https://app.hi.events/event/2/hievents-conference-2030?utm_source=gh-readme) · [Documentation](https://hi.events/docs?utm_source=gh-readme) · [Website](https://hi.events?utm_source=gh-readme)
+<br>
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://github.com/HiEventsDev/Hi.Events/blob/develop/LICENCE)
-[![GitHub Release](https://img.shields.io/github/v/release/HiEventsDev/hi.events?include_prereleases)](https://github.com/HiEventsDev/hi.events/releases)
-[![Run Unit Tests](https://github.com/HiEventsDev/hi.events/actions/workflows/unit-tests.yml/badge.svg?event=push)](https://github.com/HiEventsDev/hi.events/actions/workflows/unit-tests.yml)
-[![Docker Pulls](https://img.shields.io/docker/pulls/daveearley/hi.events-all-in-one)](https://hub.docker.com/r/daveearley/hi.events-all-in-one)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENCE)
+[![Security: Hardened](https://img.shields.io/badge/Security-Hardened%20A%2B-emerald.svg)](#-enterprise-security-hardening)
+[![India Stack: UPI & GST](https://img.shields.io/badge/India%20Stack-UPI%20%7C%20INR%20%7C%2018%25%20GST-orange.svg)](#-india-region--upi-payments)
+[![Laravel 10](https://img.shields.io/badge/Backend-Laravel%2010-red.svg)](backend)
+[![React 18](https://img.shields.io/badge/Frontend-React%2018-blue.svg)](frontend)
+[![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](docker)
 
-<a href="https://trendshift.io/repositories/10563" target="_blank">
-  <img src="https://trendshift.io/api/badge/repositories/10563" alt="HiEventsDev%2Fhi.events | Trendshift" width="250" height="55"/>
-</a>
+<br>
 
-<p>
-<a href="README.de.md">Deutsch</a> · <a href="README.pt.md">Português</a> · <a href="README.fr.md">Français</a> · <a href="README.it.md">Italiano</a> · <a href="README.nl.md">Nederlands</a> · <a href="README.es.md">Español</a> · <a href="README.zh-cn.md">中文</a> · <a href="README.zh-hk.md">繁體中文</a> · <a href="README.ja.md">日本語</a> · <a href="README.vi.md">Tiếng Việt</a> · <a href="README.tr.md">Türkçe</a> · <a href="README.hu.md">Magyar</a> · <a href="README.pl.md">Polski</a> · <a href="README.sk.md">Slovenčina</a> · <a href="README.el.md">Ελληνικά</a>
-</p>
+[⚡ Quick Start](#-quick-start) · [🛡️ Security Features](#-enterprise-security-hardening) · [🇮🇳 India & UPI Integration](#-india-region--upi-payments) · [📖 Hosting Guide](HOSTING_GUIDE.md) · [📋 Handover Log](HANDOVER.md)
 
 </div>
 
 <br>
 
-## Why Hi.Events?
+---
 
-Most ticketing platforms charge per-ticket fees and lock your data into their ecosystem. **Hi.Events is a modern,
-open-source alternative to Eventbrite, Tickettailor, Dice.fm, and other ticketing platforms** for organizers who want
-full control over branding, checkout, data, and infrastructure.
+## 🌟 Why Pragma EMS?
 
-Built for nightlife promoters, festival organizers, venues, community groups, and conference hosts.
+Most event platforms lock you into heavy per-ticket platform fees, slow payouts, and generic regional defaults. **Pragma EMS** is a modern, open-source, high-performance event management system engineered for high availability, enterprise-grade security, and seamless regional payment support.
 
-<br>
-
-<img alt="Hi.Events Dashboard" src="https://hievents-public.s3.us-west-1.amazonaws.com/website/github-screenshot.png"/>
+> [!IMPORTANT]
+> **Built for Scale & Security**: Optimized with strict API rate limiting, short-lived JWT session security, strict CORS isolation, native **Stripe UPI (Google Pay, PhonePe, Paytm, BHIM)** checkout flows, and automated **18% Indian GST** handling out of the box.
 
 <br>
 
-## Features
+<img alt="Pragma EMS Dashboard" src="https://hievents-public.s3.us-west-1.amazonaws.com/website/github-screenshot.png" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"/>
+
+<br>
+
+---
+
+## 🔥 Key Enterprise Enhancements
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🎟️ Ticketing & Sales
+### 🇮🇳 India Region & UPI Native Payments
 
-- Flexible ticket types (free, paid, donation, tiered)
-- Hidden and locked tickets behind promo codes
-- Promo codes and pre-sale access
-- Product add-ons (merch, upgrades, extras)
-- Product categories for organization
-- Full tax and fee support (VAT, service fees)
-- Capacity management and shared limits
+- **Native Stripe UPI Integration**: Seamless checkout via Google Pay, PhonePe, Paytm, BHIM & UPI ID.
+- **Async UPI Intent Authorization**: Intelligent polling engine (30s window) handling async 3D Secure / UPI approvals gracefully.
+- **Indian Financial Defaults**: Standardized to `INR (₹)` currency, `Asia/Kolkata` timezone, and default **18% GST** tax calculation engine.
+- **Dedicated Stripe India Platform**: Dedicated `STRIPE_IN_*` configuration profile supporting Indian Stripe Connect accounts.
 
 </td>
 <td width="50%" valign="top">
 
-### 🎨 Branding & Customization
+### 🛡️ Enterprise Security Hardening
 
-- Beautiful, conversion-optimized checkout
-- Customizable PDF ticket designs
-- Branded organizer homepage
-- Drag-and-drop event page builder
-- Embeddable ticket widget
-- SEO tools (meta tags, Open Graph)
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 👥 Attendee Management
-
-- Custom checkout questions
-- Advanced search, filtering, and export (CSV/XLSX)
-- Full and partial refunds
-- Bulk messaging by ticket type
-- QR code check-in with scan logs
-- Access-controlled check-in lists
-
-</td>
-<td width="50%" valign="top">
-
-### 📊 Analytics & Growth
-
-- Real-time sales dashboard
-- Affiliate and referral tracking
-- Advanced reporting (sales, tax, promos)
-- Webhooks (Zapier, Make, CRMs)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top">
-
-### ⚙️ Operations
-
-Multi-user roles and permissions · Stripe Connect instant payouts · Offline payment methods · Offline event support ·
-Automatic invoicing · Event archive · Multi-language support · Full REST API
+- **API Throttling & DDoS Protection**: Strict rate limits on `/login`, `/register` (5 req/min) and Payment Intent endpoints (10 req/min).
+- **Hardened JWT Auth**: Short-lived access token TTL (24h) and strict 7-day refresh windows to minimize token theft risk.
+- **Strict CORS & Cookie Policies**: Production CORS origin matching, HTTPS-only secure session cookies (`SameSite=Lax`).
+- **Zero Secrets Leakage**: Removed all hardcoded cryptographic secrets and enforced strict runtime key generation.
 
 </td>
 </tr>
@@ -110,92 +71,198 @@ Automatic invoicing · Event archive · Multi-language support · Full REST API
 
 <br>
 
-## Compare
+---
 
-| Feature                          | Hi.Events | Eventbrite | Tickettailor | Dice    |
-|:---------------------------------|:----------|:-----------|:-------------|:--------|
-| Self-hosted option               | ✅         | ❌          | ❌            | ❌       |
-| Open source                      | ✅         | ❌          | ❌            | ❌       |
-| No per-ticket fees (self-hosted) | ✅         | ❌          | ❌            | ❌       |
-| Full custom branding             | ✅         | Limited    | ✅            | Limited |
-| Affiliate tracking               | ✅         | ✅          | ❌            | ❌       |
-| API access                       | ✅         | ✅          | ✅            | Limited |
-| Own your data                    | ✅         | ❌          | ❌            | ❌       |
+## ✨ Features at a Glance
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🎟️ Ticketing & Revenue Engine
+
+- **Flexible Ticket Types**: Free, paid, donation, tiered, and hidden presale tickets.
+- **Promo Codes & Access Limits**: Code-protected tickets, bulk discounts, and shared capacity pools.
+- **Product Add-Ons & Merch**: Upsell merchandise, VIP passes, and parking add-ons during checkout.
+- **Automated Tax & GST Handling**: Full support for tax inclusive/exclusive pricing with custom GST rules.
+- **Instant Stripe Payouts**: Direct ticket revenue dispatch via Stripe Connect.
+
+</td>
+<td width="50%" valign="top">
+
+### 🎨 Customization & Branding
+
+- **Conversion-Optimized Checkout**: Ultra-fast, responsive single-page checkout tailored for mobile.
+- **Embeddable Ticket Widgets**: Drop-in registration forms for your existing websites.
+- **Custom PDF Ticket Generation**: Print-ready PDF tickets with unique QR codes & branding.
+- **Organizer Landing Pages**: Branded homepages listing all upcoming and past events.
+- **SEO & Social Cards**: Built-in Open Graph metadata and dynamic social preview tags.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 👥 Attendee & Access Management
+
+- **Real-Time QR Code Check-in**: Mobile check-in app with live scan logs and duplicate detection.
+- **Custom Checkout Surveys**: Gather custom attendee fields (dietary, t-shirt size, company).
+- **Granular Refunds & Swaps**: Issue full or partial refunds with automatic ticket invalidation.
+- **Targeted Bulk Broadcasts**: Send targeted email announcements to specific ticket tiers.
+
+</td>
+<td width="50%" valign="top">
+
+### 📊 Analytics & Integrations
+
+- **Live Sales Dashboard**: Real-time sales velocity, revenue metrics, and channel analytics.
+- **Affiliate & Referral Tracking**: Track promoter performance and referral link conversions.
+- **Webhooks & Automation**: Trigger external workflows via webhooks (Zapier, Make, custom CRMs).
+- **Data Export & Ownership**: Export full attendee rosters to CSV and Excel anytime.
+
+</td>
+</tr>
+</table>
 
 <br>
 
-## Quick Start
+---
 
-### One-Click Deploy
+## ⚡ Feature Comparison
 
-[![Deploy on DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://github.com/HiEventsDev/hi.events-digitalocean)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://github.com/HiEventsDev/hi.events-render.com)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/8CGKmu?referralCode=KvSr11)
-[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/8DIRY6)
+| Feature | Pragma EMS ⚡ | Eventbrite ❌ | TicketTailor ❌ | Dice ❌ |
+| :--- | :---: | :---: | :---: | :---: |
+| **Self-Hosted & Own Your Data** | ✅ **Yes** | ❌ No | ❌ No | ❌ No |
+| **Zero Per-Ticket Platform Fees** | ✅ **Yes** | ❌ No | ❌ No | ❌ No |
+| **Native UPI Payments (India)** | ✅ **Yes** | ❌ No | ❌ No | ❌ No |
+| **Automated 18% GST Calculation** | ✅ **Yes** | ❌ No | ❌ Limited | ❌ No |
+| **Hardened Rate Limiting & Auth** | ✅ **Yes** | 🔒 Proprietary | 🔒 Proprietary | 🔒 Proprietary |
+| **Custom PDF Ticket Builder** | ✅ **Yes** | ❌ No | ✅ Yes | ❌ No |
+| **Affiliate & Promoter Tracking** | ✅ **Yes** | ✅ Yes | ❌ No | ❌ No |
+| **Full REST API & Webhooks** | ✅ **Yes** | ✅ Yes | ✅ Yes | ❌ Limited |
 
-### Docker
+<br>
 
-```bash
-git clone git@github.com:HiEventsDev/hi.events.git
-cd hi.events/docker/all-in-one
+---
 
-# Generate keys (Linux/macOS)
-echo "APP_KEY=base64:$(openssl rand -base64 32)" >> .env
-echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
+## 🛡️ Enterprise Security Hardening
 
-docker compose up -d
+Security is at the core of Pragma EMS. The platform includes the following critical security controls:
+
+> [!NOTE]
+> Detailed audit logs and verification records can be viewed in [`HANDOVER.md`](HANDOVER.md) and [`SECURITY.md`](SECURITY.md).
+
+1. **Strict Rate Limiting**:
+   - Authentication Endpoints (`/login`, `/register`, `/forgot-password`): **5 requests / minute**.
+   - Payment Intent Creation (`/api/v1/payment/intent`): **10 requests / minute**.
+   - Global API Baseline: **60 requests / minute**.
+
+2. **Session & JWT Security**:
+   - Access Token TTL: **24 hours** (1,440 mins).
+   - Refresh Token TTL: **7 days** (10,080 mins).
+   - Cookies: `HTTPS-only` (Secure=true) with `SameSite=Lax` protection.
+
+3. **CORS & Input Validation**:
+   - Strict origin whitelist matching via `CORS_ALLOWED_ORIGINS`.
+   - Preflight caching set to `3600s` to eliminate excess OPTIONS overhead.
+
+<br>
+
+---
+
+## 🇮🇳 India Region & UPI Setup
+
+To enable native **UPI payments (Google Pay, PhonePe, Paytm, BHIM)** and Indian financial defaults:
+
+```env
+# backend/.env
+
+# Financial Defaults
+APP_TIMEZONE="Asia/Kolkata"
+APP_CURRENCY="INR"
+APP_TAX_RATE=0.18
+APP_TAX_COUNTRY="IN"
+APP_TAX_INDIA_GST_HANDLING_ENABLED=true
+
+# Stripe India Connect Platform
+STRIPE_IN_PUBLIC_KEY="pk_live_..."
+STRIPE_IN_SECRET_KEY="sk_live_..."
+STRIPE_IN_WEBHOOK_SECRET="whsec_..."
 ```
 
 > [!TIP]
-> **Windows users:** See `./docker/all-in-one/README.md` for key generation instructions.
-
-Open `http://localhost:8123` and create your account.
-
-📖 [Full installation guide](https://hi.events/docs/getting-started?utm_source=gh-readme)
+> When `APP_CURRENCY=INR`, Pragma automatically switches Stripe payment intent generation to explicit `['card', 'upi']` method types and triggers the interactive UPI confirmation flow on the frontend with a 30-second polling timeout.
 
 <br>
 
-## Hi.Events Cloud
+---
 
-Prefer not to self-host? **[Hi.Events Cloud](https://app.hi.events/auth/register?utm_source=gh-readme)** is a fully
-managed option with zero setup, automatic updates, and managed infrastructure.
+## 🚀 Quick Start
 
-[Get started →](https://app.hi.events/auth/register?utm_source=gh-readme)
+### Docker Compose (Recommended)
 
-<br>
+```bash
+# 1. Clone the repository
+git clone https://github.com/rehaan-ahmad/pragma-ems.git
+cd pragma-ems/docker/all-in-one
 
-## Contributing
+# 2. Generate secure application keys
+echo "APP_KEY=base64:$(openssl rand -base64 32)" >> .env
+echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
-We welcome contributions. See the [contributing guide](CONTRIBUTING.md) for details.
+# 3. Spin up the containers
+docker compose up -d
+```
 
-<br>
-
-## Support
-
-📖 [Documentation](https://hi.events/docs?utm_source=gh-readme) · 📧 [hello@hi.events](mailto:hello@hi.events) ·
-🐛 [GitHub Issues](https://github.com/HiEventsDev/hi.events/issues)
-
-<br>
-
-## Changelog
-
-Stay updated with new features and improvements on
-the [releases page](https://github.com/HiEventsDev/hi.events/releases).
+Open `http://localhost:8123` in your browser to complete setup!
 
 <br>
 
-## License
+### Manual Local Development Setup
 
-Hi.Events is licensed under **AGPL-3.0 with additional terms**. Commercial licensing
-available. [Learn more](https://hi.events/licensing).
+#### Backend (Laravel 10)
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate --seed
+php artisan serve
+```
+
+#### Frontend (React 18 + Vite)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+<br>
+
+---
+
+## 📚 Documentation & Resources
+
+- 📖 **[Comprehensive Hosting Guide](HOSTING_GUIDE.md)** — Step-by-step production deployment & hardening checklist.
+- 📋 **[Handover Document](HANDOVER.md)** — Technical changelog of all recent security & UPI updates.
+- 🔒 **[Security Policy](SECURITY.md)** — Vulnerability reporting and security architecture details.
+- 🤝 **[Contributing Guidelines](CONTRIBUTING.md)** — How to contribute features and bug fixes.
+
+<br>
+
+---
+
+## 📜 License
+
+Pragma EMS is open-source software licensed under the **AGPL-3.0 License** with commercial licensing options available.
 
 <br>
 
 <div align="center">
 
-**[Website](https://hi.events)** · **[Documentation](https://hi.events/docs)** · *
-*[Twitter/X](https://x.com/HiEventsTickets)**
+**Pragma EMS** · *Empowering Event Organizers Worldwide*
 
-Made with ☘️ in Ireland
+Made with ❤️ & ⚡
 
 </div>
